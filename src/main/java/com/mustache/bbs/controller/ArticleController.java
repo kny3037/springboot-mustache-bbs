@@ -76,7 +76,6 @@ public class ArticleController {
         log.info("generatedId:{}", savedArticle.getId());
         // souf %d %s
         return String.format("redirect:/articles/%d", savedArticle.getId());
-
     }
 
     @PostMapping("/{id}/update")
@@ -86,6 +85,11 @@ public class ArticleController {
         model.addAttribute("article", article);
         return String.format("redirect:/articles/%d", article.getId());
     }
-
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable Long id, Model model){
+        articleRepository.deleteById(id);
+        model.addAttribute("message", String.format("Id %d(이)가 지워졌습니다.", id));
+        return "redirect:/articles";
+    }
 
 }
